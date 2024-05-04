@@ -31,3 +31,20 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  :root {
+    --text: #040316;
+    --background: #fefbf6;
+    --primary: #eef85d;
+    --secondary: #ccbcf5;
+    --accent: #4f3ce2;
+  }
+  .dark {
+    --text: #eae9fc;
+    --background: #090601;
+    --primary: #eef85d;
+    --secondary: #1a0a43;
+    --accent: #311dc3;
+  }
+}
