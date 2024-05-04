@@ -1,14 +1,17 @@
 "use client";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
-import FileUpload from "@/components/SideMenu/FileUpload";
 import SideMenu from "@/components/SideMenu/SideMenu";
 import { FilesContext } from "@/context/FilesContext";
 import { socket } from "@/utils/socket";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { LuFiles } from "react-icons/lu";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+let isMobile = false;
+if(typeof window !== "undefined") {
+  isMobile = window.matchMedia("(max-width: 640px)").matches;
+}
 const Page = () => {
   const queryClient = new QueryClient();
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -19,7 +22,7 @@ const Page = () => {
       socketInstance.disconnect();
     };
   }, [socketInstance]);
-  const [isMobile] = useState(!!window ? window.matchMedia("(max-width: 640px)").matches : null); // Example breakpoint for mobile
+  // const [isMobile] = useState(!!window ?  : false); // Example breakpoint for mobile
   return (
     <FilesContext.Provider
       value={{ selectedFiles, setSelectedFiles, chatStarted, setChatStarted }}
@@ -74,7 +77,7 @@ const MobileMenu = ({ socketInstance }: any) => {
 
 const MobileFileSection = ({ socketInstance }: any) => {
   return (
-    <div className="sticky w-full pt-4">
+    <div className=" w-full">
       <SideMenu socketInstance={socketInstance} />
     </div>
   );

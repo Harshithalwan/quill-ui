@@ -29,7 +29,7 @@ const FileUpload = ({}) => {
   );
   const removeAllFiles = useCallback(() => {
     setFiles([]);
-  }, [files]);
+  }, []);
 
   const fileMutation = useMutation<unknown, unknown, string | Blob>({
     mutationFn: (fileList: string | Blob) => {
@@ -49,7 +49,7 @@ const FileUpload = ({}) => {
     async (fileToUpload: string | Blob) => {
       fileMutation.mutate(fileToUpload);
     },
-    [fileMutation.data, fileMutation.isSuccess, fileMutation.mutate]
+    [fileMutation]
   );
   return (
     <div className="rounded-2xl p-4 flex flex-col gap-4 opacity-50 pointer-events-none">

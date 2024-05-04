@@ -50,7 +50,7 @@ const FilesList = ({
         );
       }
     },
-    [selectedFiles]
+    [selectedFiles, setSelectedFiles]
   );
   return (
     <div className="overflow-x-auto text-text p-2">
