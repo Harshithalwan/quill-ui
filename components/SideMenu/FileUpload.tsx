@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { useMutation, useQuery } from "react-query";
 import "./styles.css";
 
-const API_URL = process.env.API_URL || "";
+const API_URL = process.env.NEXT_PUBLIC_SERVICE_URL || "";
 
 const FileUpload = ({}) => {
   const [files, setFiles] = useState<(string | Blob)[]>([]);
@@ -35,7 +35,7 @@ const FileUpload = ({}) => {
     mutationFn: (fileList: string | Blob) => {
       const formdata = new FormData();
       formdata.append("file", fileList);
-      return fetch(API_URL + "/prepareDocuments", {
+      return fetch(API_URL + "/api/prepareDocuments", {
         method: "POST",
         body: formdata,
       }).then((res) => res.json());
