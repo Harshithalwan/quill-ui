@@ -3,11 +3,11 @@ import { Suspense, useContext } from "react";
 import { useQuery } from "react-query";
 import FileUpload from "./FileUpload";
 import ExistingFiles from "./ExistingFiles";
-import { FilesContext } from "@/app/chat/page";
+import { FilesContext, FilesContextType } from "@/context/FilesContext";
 
 const SideMenu = ({ socketInstance }: { socketInstance: any }) => {
   const { selectedFiles, setChatStarted, chatStarted, setSelectedFiles } =
-    useContext<any>(FilesContext);
+    useContext<FilesContextType>(FilesContext);
   const onAddToChat = () => {
     setChatStarted(true);
     socketInstance.connect();

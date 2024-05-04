@@ -2,14 +2,15 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { IoMdSend } from "react-icons/io";
 import { socket } from "@/utils/socket";
 import "./styles.css";
-import { FilesContext } from "@/app/chat/page";
+
 import { FaLock } from "react-icons/fa";
+import { FilesContextType, FilesContext } from "@/context/FilesContext";
 
 const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
   const [messageList, setMessageList] = useState<
     { text: string; sender: string }[]
   >([]);
-  const { selectedFiles, chatStarted } = useContext<any>(FilesContext);
+  const { selectedFiles, chatStarted } = useContext<FilesContextType>(FilesContext);
   const [message, setMessage] = useState("");
   const [waitingForResponse, setWaitingForResponse] = useState(false);
 
@@ -33,7 +34,7 @@ const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
     return () => {
       socketInstance.off("message");
     };
-  }, []);
+  }, [socketInstance]);
 
   const sendMessage = useCallback(
     (userMessage: string) => {
@@ -48,7 +49,7 @@ const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
       ]);
       setMessage("");
     },
-    [selectedFiles]
+    [selectedFiles, socketInstance]
   );
 
   return (
@@ -126,7 +127,7 @@ const MessageList = ({ messageList }: { messageList: MesssageType[] }) => {
     return (
       <>
         {messageList.map((msg) => (
-          <MessageComponent message={msg} />
+          <MessageComponent key={msg.text} message={msg} />
         ))}
       </>
     );

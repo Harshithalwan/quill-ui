@@ -4,7 +4,6 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useMutation, useQuery } from "react-query";
 import "./styles.css";
-import { FilesContext } from "@/app/chat/page";
 
 const API_URL = process.env.API_URL || "";
 

@@ -1,8 +1,8 @@
-import { FilesContext } from "@/app/chat/page";
+import { FilesContextType, FilesContext } from "@/context/FilesContext";
 import { useCallback, useContext } from "react";
 
 const ExistingFiles = () => {
-  const { selectedFiles, setSelectedFiles } = useContext(FilesContext);
+  const { selectedFiles, setSelectedFiles } = useContext<FilesContextType>(FilesContext);
   return (
     <div>
       <p className="p-4 text-text font-bold">
@@ -37,7 +37,7 @@ const FilesList = ({
   selectedFiles: any;
   setSelectedFiles: any;
 }) => {
-    const { chatStarted } = useContext(FilesContext);
+    const { chatStarted } = useContext<FilesContextType>(FilesContext);
   const onFileSelect = useCallback(
     (checkbox: { checked: any }, file: any) => {
       if (checkbox.checked) {
@@ -58,7 +58,7 @@ const FilesList = ({
         <tbody>
           {FILES.map((file) => {
             return (
-              <tr>
+              <tr key={file.id}>
                 <th>
                   <label>
                     <input

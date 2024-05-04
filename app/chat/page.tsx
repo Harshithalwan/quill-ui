@@ -2,13 +2,13 @@
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
 import FileUpload from "@/components/SideMenu/FileUpload";
 import SideMenu from "@/components/SideMenu/SideMenu";
+import { FilesContext } from "@/context/FilesContext";
 import { socket } from "@/utils/socket";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { LuFiles } from "react-icons/lu";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-export const FilesContext = createContext<any>({});
 const Page = () => {
   const queryClient = new QueryClient();
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -18,8 +18,8 @@ const Page = () => {
     return function cleanup() {
       socketInstance.disconnect();
     };
-  }, []);
-  const [isMobile] = useState(window.matchMedia("(max-width: 640px)").matches); // Example breakpoint for mobile
+  }, [socketInstance]);
+  const [isMobile] = useState(!!window ? window.matchMedia("(max-width: 640px)").matches : null); // Example breakpoint for mobile
   return (
     <FilesContext.Provider
       value={{ selectedFiles, setSelectedFiles, chatStarted, setChatStarted }}
