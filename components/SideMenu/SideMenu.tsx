@@ -16,7 +16,7 @@ const SideMenu = ({
     useContext<FilesContextType>(FilesContext);
   const onAddToChat = () => {
     setChatStarted(true);
-    setFileSectionOpen(false);
+    setFileSectionOpen && setFileSectionOpen(false);
     socketInstance.connect();
   };
   const onCancel = () => {
