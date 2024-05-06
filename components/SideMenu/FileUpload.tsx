@@ -54,7 +54,7 @@ const FileUpload = ({}) => {
   return (
     <div className="rounded-2xl p-4 flex flex-col gap-4 opacity-50 pointer-events-none">
       {/* <div className="text-text font-bold text-wrap">Coming Soon</div> */}
-      <div className="text-text font-bold text-wrap">Need funding to implement this</div>
+      <div className="text-text font-bold text-wrap">Send me money first</div>
       <input
         type="file"
         id="fileUpload"
