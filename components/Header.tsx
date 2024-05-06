@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Header = ({
-  isDarkMode,
-  setDarkMode,
+  darkMode,
+  toggleDarkMode,
 }: {
-  isDarkMode: boolean;
-  setDarkMode: Function;
+  darkMode: boolean;
+  toggleDarkMode: any;
 }) => {
-  const {push} = useRouter()
+  const { push } = useRouter();
   return (
     <div className="p-2">
       <div className="h-12 z-10 flex items-center gap-2 p-2 bg-accent justify-between rounded w-full sticky">
@@ -21,17 +21,15 @@ const Header = ({
             alt="logo"
             width={70}
             height={70}
-            onClick={() => push('/')}
+            onClick={() => push("/")}
           />
         </div>
         <div className="flex justify-center items-center">
           <input
             type="checkbox"
             className="toggle [--tglbg:yellow] bg-blue-500 hover:bg-blue-700 border-blue-500"
-            checked={!isDarkMode}
-            onChange={() => {
-              setDarkMode(!isDarkMode);
-            }}
+            checked={!darkMode}
+            onChange={toggleDarkMode}
           />
           <div
             id="g_id_onload"

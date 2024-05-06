@@ -9,7 +9,7 @@ import { LuFiles } from "react-icons/lu";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 let isMobile = false;
-if(typeof window !== "undefined") {
+if (typeof window !== "undefined") {
   isMobile = window.matchMedia("(max-width: 640px)").matches;
 }
 const Page = () => {
@@ -22,23 +22,24 @@ const Page = () => {
       socketInstance.disconnect();
     };
   }, [socketInstance]);
-  // const [isMobile] = useState(!!window ?  : false); // Example breakpoint for mobile
   return (
     <FilesContext.Provider
       value={{ selectedFiles, setSelectedFiles, chatStarted, setChatStarted }}
     >
       <QueryClientProvider client={queryClient}>
-        <div className="flex p-4 flex-col sm:flex-row flex-grow gap-4 min-h-0">
+        <div className="flex p-4 flex-col sm:flex-row flex-grow overflow-auto gap-2 min-h-0">
           {isMobile ? (
             <MobileMenu socketInstance={socketInstance} />
           ) : (
-            <div className="h-full flex">
-              <SideMenu socketInstance={socketInstance} />
-            </div>
+            <>
+              <div className="sm:w-1/3 h-full flex">
+                <SideMenu socketInstance={socketInstance} />
+              </div>
+              <div className="overflow-y-auto flex-auto">
+                <ChatWindow socketInstance={socketInstance} />
+              </div>
+            </>
           )}
-          <div className="sm:w-1/3 overflow-y-auto flex-1">
-            <ChatWindow socketInstance={socketInstance} />
-          </div>
         </div>
       </QueryClientProvider>
     </FilesContext.Provider>
@@ -53,7 +54,7 @@ const MobileMenu = ({ socketInstance }: any) => {
       <div className="border border-text rounded-md">
         <ul className="menu menu-horizontal rounded-box w-full flex justify-around gap-0">
           <li>
-            <a className="bg-primary text-black" onClick={() => setOpen(!open)}>
+            <a className={open ? `bg-base-200 text-white` :`bg-primary text-black` } onClick={() => setOpen(true)}>
               <LuFiles size={24} />
               Files
               <span className="badge badge-sm">{selectedFiles.length}</span>
@@ -61,7 +62,7 @@ const MobileMenu = ({ socketInstance }: any) => {
           </li>
           <li>
             <a
-              className="bg-green-400 text-black"
+              className={!open ? `bg-base-200 text-white` : `bg-green-400 text-black`}
               onClick={() => setOpen(false)}
             >
               <IoChatbubbleOutline size={24} />
@@ -70,14 +71,20 @@ const MobileMenu = ({ socketInstance }: any) => {
           </li>
         </ul>
       </div>
-      {open && <MobileFileSection socketInstance={socketInstance} />}
+      {open ? (
+        <MobileFileSection socketInstance={socketInstance} />
+      ) : (
+        <div className="overflow-y-auto flex-1">
+          <ChatWindow socketInstance={socketInstance} />
+        </div>
+      )}
     </>
   );
 };
 
 const MobileFileSection = ({ socketInstance }: any) => {
   return (
-    <div className=" w-full">
+    <div className="flex-1 flex">
       <SideMenu socketInstance={socketInstance} />
     </div>
   );

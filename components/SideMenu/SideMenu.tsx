@@ -17,7 +17,7 @@ const SideMenu = ({ socketInstance }: { socketInstance: any }) => {
   };
 
   return (
-    <div className="border border-text rounded-lg flex flex-col overflow-y-auto">
+    <div className="border border-text rounded-sm flex flex-col overflow-y-auto flex-auto">
       <Suspense fallback={<Loading />}>
         <div className="p-4 text-xl font-bold text-text">
           Start by adding a file

@@ -1,22 +1,29 @@
 "use client";
-import Header from "@/components/Header";
+import { ThemeContext } from "@/context/ThemeContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext } from "react";
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
   const { push } = useRouter();
   return (
-    <main className={`fixed overflow-y-auto h-full ${isDarkMode ? "dark" : ""}`}>
-      <div className="bg-background h-full">
-        <Header setDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
-        <div className="p-4">
-          <div className="z-10 flex item justify-start sm:flex-row flex-col items-center gap-8">
+    <main className={`fixed overflow-y-auto h-full`}>
+      <div className="bg-background h-full w-screen flex flex-col">
+        <div className="flex justify-end p-8">
+          <input
+            type="checkbox"
+            className="toggle [--tglbg:yellow] bg-blue-500 hover:bg-blue-700 border-blue-500"
+            checked={!darkMode}
+            onChange={toggleDarkMode}
+          />
+        </div>
+        <div className="p-4 pt-20">
+          <div className="flex item justify-center flex-col items-center gap-8">
             <Image
               className="p-4"
               src={
-                isDarkMode
+                darkMode
                   ? "/logo/png/logo-no-background.png"
                   : "/logo/png/light-logo-no-background.png"
               }
@@ -24,19 +31,18 @@ export default function Home() {
               width={200}
               height={200}
             />
-            <p className="text-text p-4">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
-            
+            {/* <p className="text-text p-4 text-xl">
+              Converse with your documents
+            </p> */}
           </div>
-          <div className="p-8 w-full flex items-center justify-center">
-              <button
-                className="btn btn-primary bg-primary w-1/2 sm:w-72 btn-circle"
-                onClick={() => push("/chat")}
-              >
-                Try Quill Now
-              </button>
-            </div>
+          <div className="p-8 pt-20 w-full flex items-center justify-center sm:static">
+            <button
+              className="btn btn-primary bg-primary w-1/2 sm:w-72 btn-circle"
+              onClick={() => push("/chat")}
+            >
+              Try Now
+            </button>
+          </div>
         </div>
       </div>
     </main>
