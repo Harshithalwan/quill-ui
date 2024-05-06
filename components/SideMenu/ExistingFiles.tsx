@@ -25,7 +25,7 @@ const FILES = [
   },
   {
     src: "./Metamorphosis.pdf",
-    cover: "./FunctionalProgramming-cover.jpg",
+    cover: "./java-cover.jpg",
     name: "Functional Programming in Java",
     id: "e2f411e2-5719-419a-b917-ba0115c92860",
   },
