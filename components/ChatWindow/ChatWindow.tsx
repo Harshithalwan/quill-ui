@@ -5,21 +5,16 @@ import "./styles.css";
 
 import { FaLock } from "react-icons/fa";
 import { FilesContextType, FilesContext } from "@/context/FilesContext";
+import { RxReset } from "react-icons/rx";
 
-const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
+const ChatWindow = ({ socketInstance, setFileSectionOpen }: { socketInstance: any, setFileSectionOpen?: any }) => {
   const [messageList, setMessageList] = useState<
     { text: string; sender: string }[]
   >([]);
-  const { selectedFiles, chatStarted } = useContext<FilesContextType>(FilesContext);
+  const { selectedFiles, chatStarted, setSelectedFiles, setChatStarted } =
+    useContext<FilesContextType>(FilesContext);
   const [message, setMessage] = useState("");
   const [waitingForResponse, setWaitingForResponse] = useState(false);
-
-  // useEffect(() => {
-  //   socketInstance.connect();
-  //   return function cleanup() {
-  //     socketInstance.disconnect();
-  //   };
-  // }, []);
 
   useEffect(() => {
     socketInstance.on("message", (msg: any) => {
@@ -35,6 +30,13 @@ const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
       socketInstance.off("message");
     };
   }, [socketInstance]);
+
+  const onReset = useCallback(() => {
+    setSelectedFiles([]);
+    setChatStarted(false);
+    setFileSectionOpen(true);
+    socketInstance.disconnect();
+  }, []);
 
   const sendMessage = useCallback(
     (userMessage: string) => {
@@ -55,14 +57,37 @@ const ChatWindow = ({ socketInstance }: { socketInstance: any }) => {
   return (
     <div className="h-full rounded p-2 border border-text">
       <div className="h-full flex flex-col justify-end overflow-y-auto">
+        {chatStarted && selectedFiles.length > 0 && (
+          <div className="text-black font-bold flex justify-between items-center">
+            <details className="dropdown flex flex-grow p-4 m-2 rounded-lg bg-primary">
+              <summary className="">
+                Chatting with{" "}
+                <span className="link text-blue-600">
+                  {selectedFiles.length}
+                </span>{" "}
+                files
+              </summary>
+              <div className="p-2 pl-4">
+                {selectedFiles.map((file: any) => (
+                  <div className="list-item" key={file.id}>
+                    {file.name}
+                  </div>
+                ))}
+              </div>
+            </details>
+            <button title="Reset chat" className="btn btn-ghost text-text" onClick={onReset}>
+              <RxReset size={20} />
+            </button>
+          </div>
+        )}
         {chatStarted ? (
           <div className="p-4 h-full overflow-y-auto flex flex-col">
             <MessageList messageList={messageList} />
             {waitingForResponse && <Loader />}
           </div>
         ) : (
-          <div className="flex justify-center h-full items-center text-text opacity-60">  
-          <FaLock />
+          <div className="flex justify-center h-full items-center text-text opacity-60">
+            <FaLock />
             <p className="p-4">Unlock by adding a file</p>
           </div>
         )}

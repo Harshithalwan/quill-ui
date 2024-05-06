@@ -35,7 +35,7 @@ const FileUpload = ({}) => {
     mutationFn: (fileList: string | Blob) => {
       const formdata = new FormData();
       formdata.append("file", fileList);
-      return fetch(API_URL + "/api/prepareDocuments", {
+      return fetch(API_URL + "api/prepareDocuments", {
         method: "POST",
         body: formdata,
       }).then((res) => res.json());
@@ -53,8 +53,8 @@ const FileUpload = ({}) => {
   );
   return (
     <div className="rounded-2xl p-4 flex flex-col gap-4 opacity-50 pointer-events-none">
-      <div className="text-text font-bold text-wrap">Coming Soon</div>
-      {/* <div className="text-text font-bold text-wrap">Add file</div> */}
+      {/* <div className="text-text font-bold text-wrap">Coming Soon</div> */}
+      <div className="text-text font-bold text-wrap">Need funding to implement this</div>
       <input
         type="file"
         id="fileUpload"
@@ -141,7 +141,7 @@ const FilesList = ({
               Upload
             </button>
             <button
-              className="btn btn-ghost border border-text hover:shadow-lg"
+              className="btn btn-ghost border border-text hover:shadow-lg text-text"
               onClick={() => removeAllFiles()}
             >
               Remove All
