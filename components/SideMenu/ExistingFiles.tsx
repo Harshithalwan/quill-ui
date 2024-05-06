@@ -54,6 +54,7 @@ const FILES = [
     id: "c7463c6a-abf2-41ba-93d8-6f8d7ad3f1e6",
   },
 ];
+
 const FilesList = ({
   selectedFiles,
   setSelectedFiles,
@@ -113,4 +114,5 @@ const FilesList = ({
     </div>
   );
 };
+
 export default ExistingFiles;
